@@ -33,11 +33,11 @@ class Task:
 
     def __post_init__(self):
         """Validate task data after initialization."""
-        if not self.title or self._count_words(self.title) < 30:
-            raise ValueError("Task title must be at least 30 words long")
+        if not self.title or self._count_words(self.title) > 30:
+            raise ValueError("Task title must be at most 30 words long")
 
-        if not self.description or self._count_words(self.description) < 150:
-            raise ValueError("Task description must be at least 150 words long")
+        if not self.description or self._count_words(self.description) > 150:
+            raise ValueError("Task description must be at most 150 words long")
 
         if self.deadline and self.deadline < date.today():
             raise ValueError("Task deadline cannot be in the past")
@@ -55,13 +55,13 @@ class Task:
                       deadline: Optional[date] = None) -> None:
         """Update task details with validation."""
         if title is not None:
-            if not title or self._count_words(title) < 30:
-                raise ValueError("Task title must be at least 30 words long")
+            if not title or self._count_words(title) > 30:
+                raise ValueError("Task title must be at most 30 words long")
             self.title = title
 
         if description is not None:
-            if not description or self._count_words(description) < 150:
-                raise ValueError("Task description must be at least 150 words long")
+            if not description or self._count_words(description) > 150:
+                raise ValueError("Task description must be at most 150 words long")
             self.description = description
 
         if deadline is not None:
@@ -82,11 +82,11 @@ class Project:
 
     def __post_init__(self):
         """Validate project data after initialization."""
-        if not self.name or self._count_words(self.name) < 30:
-            raise ValueError("Project name must be at least 30 words long")
+        if not self.name or self._count_words(self.name) > 30:
+            raise ValueError("Project name must be at most 30 words long")
 
-        if not self.description or self._count_words(self.description) < 150:
-            raise ValueError("Project description must be at least 150 words long")
+        if not self.description or self._count_words(self.description) > 150:
+            raise ValueError("Project description must be at most 150 words long")
 
     def _count_words(self, text: str) -> int:
         """Count words in a text string."""
@@ -116,11 +116,11 @@ class Project:
                       description: Optional[str] = None) -> None:
         """Update project details with validation."""
         if name is not None:
-            if not name or self._count_words(name) < 30:
-                raise ValueError("Project name must be at least 30 words long")
+            if not name or self._count_words(name) > 30:
+                raise ValueError("Project name must be at most 30 words long")
             self.name = name
 
         if description is not None:
-            if not description or self._count_words(description) < 150:
-                raise ValueError("Project description must be at least 150 words long")
+            if not description or self._count_words(description) > 150:
+                raise ValueError("Project description must be at most 150 words long")
             self.description = description
