@@ -273,15 +273,46 @@ class TodoCLI:
         print("\n✏️  Update Task")
         print("-" * 30)
 
-        task_id = input("Enter task ID: ").strip()
-        if not task_id:
-            print("❌ Task ID cannot be empty.")
+        projects = self.storage.list_projects()
+        if not projects:
+            print("❌ No projects available.")
             return
 
-        task = self.storage.get_task(task_id)
-        if not task:
-            print(f"❌ Task with ID '{task_id}' not found.")
+        print("Available projects:")
+        for i, project in enumerate(projects, 1):
+            print(f"{i}. {project.name}")
+
+        try:
+            project_choice = int(input("Select project (number): ")) - 1
+            if project_choice < 0 or project_choice >= len(projects):
+                print("❌ Invalid project selection.")
+                return
+        except ValueError:
+            print("❌ Please enter a valid number.")
             return
+
+        project_id = projects[project_choice].project_id
+        tasks = self.storage.get_project_tasks(project_id)
+
+        if not tasks:
+            print(f"📭 No tasks found in project '{projects[project_choice].name}'.")
+            return
+
+        print(f"\nTasks in '{projects[project_choice].name}':")
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. [{task.task_id}] {task.title} (Status: {task.status.value})")
+
+        try:
+            task_choice = int(input("Select task to update (number): ")) - 1
+            if task_choice < 0 or task_choice >= len(tasks):
+                print("❌ Invalid task selection.")
+                return
+        except ValueError:
+            print("❌ Please enter a valid number.")
+            return
+
+        task = tasks[task_choice]
+        task_id = task.task_id
 
         print(f"Current title: {task.title}")
         print(f"Current description: {task.description[:100]}{'...' if len(task.description) > 100 else ''}")
@@ -309,15 +340,45 @@ class TodoCLI:
         print("\n🔄 Update Task Status")
         print("-" * 30)
 
-        task_id = input("Enter task ID: ").strip()
-        if not task_id:
-            print("❌ Task ID cannot be empty.")
+        projects = self.storage.list_projects()
+        if not projects:
+            print("❌ No projects available.")
             return
 
-        task = self.storage.get_task(task_id)
-        if not task:
-            print(f"❌ Task with ID '{task_id}' not found.")
+        print("Available projects:")
+        for i, project in enumerate(projects, 1):
+            print(f"{i}. {project.name}")
+
+        try:
+            project_choice = int(input("Select project (number): ")) - 1
+            if project_choice < 0 or project_choice >= len(projects):
+                print("❌ Invalid project selection.")
+                return
+        except ValueError:
+            print("❌ Please enter a valid number.")
             return
+
+        project_id = projects[project_choice].project_id
+        tasks = self.storage.get_project_tasks(project_id)
+
+        if not tasks:
+            print(f"📭 No tasks found in project '{projects[project_choice].name}'.")
+            return
+
+        print(f"\nTasks in '{projects[project_choice].name}':")
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. [{task.task_id}] {task.title} (Status: {task.status.value})")
+
+        try:
+            task_choice = int(input("Select task to update (number): ")) - 1
+            if task_choice < 0 or task_choice >= len(tasks):
+                print("❌ Invalid task selection.")
+                return
+        except ValueError:
+            print("❌ Please enter a valid number.")
+            return
+
+        task = tasks[task_choice]
 
         print(f"Current status: {task.status.value}")
         print("Available statuses:")
@@ -345,15 +406,45 @@ class TodoCLI:
         print("\n🗑️  Delete Task")
         print("-" * 30)
 
-        task_id = input("Enter task ID: ").strip()
-        if not task_id:
-            print("❌ Task ID cannot be empty.")
+        projects = self.storage.list_projects()
+        if not projects:
+            print("❌ No projects available.")
             return
 
-        task = self.storage.get_task(task_id)
-        if not task:
-            print(f"❌ Task with ID '{task_id}' not found.")
+        print("Available projects:")
+        for i, project in enumerate(projects, 1):
+            print(f"{i}. {project.name}")
+
+        try:
+            project_choice = int(input("Select project (number): ")) - 1
+            if project_choice < 0 or project_choice >= len(projects):
+                print("❌ Invalid project selection.")
+                return
+        except ValueError:
+            print("❌ Please enter a valid number.")
             return
+
+        project_id = projects[project_choice].project_id
+        tasks = self.storage.get_project_tasks(project_id)
+
+        if not tasks:
+            print(f"📭 No tasks found in project '{projects[project_choice].name}'.")
+            return
+
+        print(f"\nTasks in '{projects[project_choice].name}':")
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. [{task.task_id}] {task.title} (Status: {task.status.value})")
+
+        try:
+            task_choice = int(input("Select task to delete (number): ")) - 1
+            if task_choice < 0 or task_choice >= len(tasks):
+                print("❌ Invalid task selection.")
+                return
+        except ValueError:
+            print("❌ Please enter a valid number.")
+            return
+
+        task = tasks[task_choice]
 
         confirm = input(f"Are you sure you want to delete task '{task.title}'? (yes/no): ").strip().lower()
         if confirm not in ['yes', 'y']:
@@ -361,7 +452,7 @@ class TodoCLI:
             return
 
         try:
-            success = self.storage.delete_task(task_id)
+            success = self.storage.delete_task(task.task_id)
             if success:
                 print("✅ Task deleted successfully!")
             else:
