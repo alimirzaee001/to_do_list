@@ -98,15 +98,26 @@ class TodoCLI:
         print("\n✏️  Update Project")
         print("-" * 30)
 
-        project_id = input("Enter project ID: ").strip()
-        if not project_id:
-            print("❌ Project ID cannot be empty.")
+        projects = self.storage.list_projects()
+        if not projects:
+            print("❌ No projects available to update.")
             return
 
-        project = self.storage.get_project(project_id)
-        if not project:
-            print(f"❌ Project with ID '{project_id}' not found.")
+        print("Available projects:")
+        for i, project in enumerate(projects, 1):
+            print(f"{i}. {project.name}")
+
+        try:
+            project_choice = int(input("Select project to update (number): ")) - 1
+            if project_choice < 0 or project_choice >= len(projects):
+                print("❌ Invalid project selection.")
+                return
+        except ValueError:
+            print("❌ Please enter a valid number.")
             return
+
+        project = projects[project_choice]
+        project_id = project.project_id
 
         print(f"Current name: {project.name}")
         print(f"Current description: {project.description[:100]}{'...' if len(project.description) > 100 else ''}")
@@ -129,15 +140,26 @@ class TodoCLI:
         print("\n🗑️  Delete Project")
         print("-" * 30)
 
-        project_id = input("Enter project ID: ").strip()
-        if not project_id:
-            print("❌ Project ID cannot be empty.")
+        projects = self.storage.list_projects()
+        if not projects:
+            print("❌ No projects available to delete.")
             return
 
-        project = self.storage.get_project(project_id)
-        if not project:
-            print(f"❌ Project with ID '{project_id}' not found.")
+        print("Available projects:")
+        for i, project in enumerate(projects, 1):
+            print(f"{i}. {project.name}")
+
+        try:
+            project_choice = int(input("Select project to delete (number): ")) - 1
+            if project_choice < 0 or project_choice >= len(projects):
+                print("❌ Invalid project selection.")
+                return
+        except ValueError:
+            print("❌ Please enter a valid number.")
             return
+
+        project = projects[project_choice]
+        project_id = project.project_id
 
         confirm = input(f"Are you sure you want to delete project '{project.name}'? (yes/no): ").strip().lower()
         if confirm not in ['yes', 'y']:
