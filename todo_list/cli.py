@@ -53,12 +53,12 @@ class TodoCLI:
         print("\n📁 Create New Project")
         print("-" * 30)
 
-        name = input("Enter project name (min 30 characters): ").strip()
+        name = input("Enter project name (min 30 words): ").strip()
         if not name:
             print("❌ Project name cannot be empty.")
             return
 
-        description = input("Enter project description (min 150 characters): ").strip()
+        description = input("Enter project description (min 150 words): ").strip()
         if not description:
             print("❌ Project description cannot be empty.")
             return
@@ -179,12 +179,12 @@ class TodoCLI:
 
         project_id = projects[project_choice].project_id
 
-        title = input("Enter task title (min 30 characters): ").strip()
+        title = input("Enter task title (min 30 words): ").strip()
         if not title:
             print("❌ Task title cannot be empty.")
             return
 
-        description = input("Enter task description (min 150 characters): ").strip()
+        description = input("Enter task description (min 150 words): ").strip()
         if not description:
             print("❌ Task description cannot be empty.")
             return
