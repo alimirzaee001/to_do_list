@@ -25,3 +25,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 todo-cli = "todo_list.cli:main"
+todo-close-overdue = "todo_list.scheduler:main"
+todo-scheduler = "todo_list.scheduler:run_scheduler"

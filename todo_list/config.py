@@ -40,6 +40,7 @@ class Config:
             'DATABASE_URL',
             f"postgresql+psycopg2://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
         )
+        self.close_overdue_interval_minutes = self._get_int_env('CLOSE_OVERDUE_INTERVAL_MINUTES', 15)
 
     def _get_int_env(self, key: str, default: int) -> int:
         """Get integer value from environment variable."""
