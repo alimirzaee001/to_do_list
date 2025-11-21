@@ -94,7 +94,13 @@ class Task(Base):
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
     status: Mapped[TaskStatus] = mapped_column(
-        SAEnum(TaskStatus, name="task_status"), default=TaskStatus.TODO, nullable=False
+        SAEnum(
+            TaskStatus,
+            name="task_status",
+            values_callable=lambda enum_cls: [e.value for e in enum_cls],
+        ),
+        default=TaskStatus.TODO,
+        nullable=False,
     )
     deadline: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
