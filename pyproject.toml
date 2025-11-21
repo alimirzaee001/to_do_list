@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "todo_list"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8.1,<4.0"
 python-dotenv = "^1.0.0"
 sqlalchemy = "^2.0.25"
 psycopg2-binary = "^2.9.9"
