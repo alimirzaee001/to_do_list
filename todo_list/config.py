@@ -31,6 +31,15 @@ class Config:
 
         self.max_projects = self._get_int_env('MAX_NUMBER_OF_PROJECTS', 10)
         self.max_tasks = self._get_int_env('MAX_NUMBER_OF_TASKS', 100)
+        self.db_host = os.getenv('DB_HOST', 'localhost')
+        self.db_port = int(os.getenv('DB_PORT', 5432))
+        self.db_name = os.getenv('DB_NAME', 'todo_db')
+        self.db_user = os.getenv('DB_USER', 'todo_user')
+        self.db_password = os.getenv('DB_PASSWORD', 'todo_pass')
+        self.database_url = os.getenv(
+            'DATABASE_URL',
+            f"postgresql+psycopg2://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
+        )
 
     def _get_int_env(self, key: str, default: int) -> int:
         """Get integer value from environment variable."""
